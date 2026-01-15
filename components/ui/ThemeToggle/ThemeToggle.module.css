@@ -1,0 +1,49 @@
+.toggleBtn {
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+  outline: none;
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.toggleBtn:hover {
+  color: var(--color-text-secondary);
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.5s ease;
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.moon.hidden {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.moon:not(.hidden) {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.sun.hidden {
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.sun:not(.hidden) {
+  transform: translate(-50%, -50%) rotate(0deg);
+}

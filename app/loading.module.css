@@ -1,0 +1,129 @@
+.main {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  padding-top: 4rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.heroSkeleton {
+  padding: 0 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.titleLine {
+  width: 70%;
+  height: 10vw;
+  background-color: var(--color-surface);
+  border-radius: 4px;
+}
+
+.titleLineShort {
+  width: 40%;
+  height: 10vw;
+  background-color: var(--color-surface);
+  border-radius: 4px;
+}
+
+.subtitleLine {
+  width: 200px;
+  height: 1rem;
+  background-color: var(--color-surface);
+  margin-top: 1rem;
+  border-radius: 2px;
+}
+
+.feedSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding-bottom: 6rem;
+}
+
+.cardSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.headerSkeleton {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 1.5rem;
+}
+
+.metaSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 60%;
+}
+
+.clientLine {
+  width: 30%;
+  height: 0.75rem;
+  background-color: var(--color-surface);
+  border-radius: 2px;
+}
+
+.projectLine {
+  width: 80%;
+  height: 1.75rem;
+  background-color: var(--color-surface);
+  border-radius: 4px;
+}
+
+.toggleSkeleton {
+  width: 60px;
+  height: 32px;
+  background-color: var(--color-surface);
+  border-radius: 20px;
+}
+
+.imageSkeleton {
+  width: 100%;
+  aspect-ratio: 9/19.5;
+  background-color: var(--color-surface);
+  margin: 0 1.5rem;
+  border-radius: 12px;
+  width: calc(100% - 3rem);
+}
+
+.footerSkeleton {
+  padding: 0 1.5rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.tagSkeleton {
+  width: 60px;
+  height: 24px;
+  background-color: var(--color-surface);
+  border-radius: 2px;
+}
+
+@media (min-width: 768px) {
+  .main {
+    padding-top: 8rem;
+  }
+  
+  .feedSkeleton {
+    gap: 8rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .titleLine, .titleLineShort {
+    height: 6rem;
+  }
+}
