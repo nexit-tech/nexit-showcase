@@ -69,3 +69,80 @@
     margin: 0 auto;
   }
 }
+
+.sectionTitle {
+  font-size: 2rem; /* Maior */
+  font-weight: 800; /* Mais grosso */
+  margin-bottom: 2.5rem;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centralizado */
+  gap: 0.5rem;
+  position: relative;
+  text-transform: uppercase; /* Letras maiúsculas */
+  letter-spacing: -1px;
+}
+
+.sectionTitle span {
+  color: var(--color-primary);
+}
+
+/* CARROSSEL (Scroll Snap) */
+.carousel {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding: 1rem 2rem 3rem 2rem; /* Espaço para scroll e sombra */
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  
+  /* Esconde a barra de rolagem mas mantém funcional */
+  scrollbar-width: none; 
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carouselItem {
+  flex: 0 0 350px; /* Largura fixa do card no carrossel */
+  scroll-snap-align: center;
+}
+
+/* LISTA COMUM (Para os não destaques) */
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Responsivo para celular */
+@media (max-width: 768px) {
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+  
+  .sectionTitle {
+    padding-left: 1rem;
+  }
+  
+  .carousel {
+    padding: 1rem 1rem 2rem 1rem;
+  }
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: var(--color-primary);
+  border-radius: 2px;
+}

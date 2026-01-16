@@ -5,4 +5,5 @@ export interface ShowcaseItem {
   mobileImages: string[]
   desktopImages: string[]
   tags: string[]
+  isFeatured: boolean
 }

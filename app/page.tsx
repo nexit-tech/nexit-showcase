@@ -1,3 +1,4 @@
+import FeaturedCarousel from '@/components/ui/FeaturedCarousel/FeaturedCarousel' // <--- Novo Import
 import ShowcaseCard from '@/components/ui/ShowcaseCard/ShowcaseCard'
 import ThemeToggle from '@/components/ui/ThemeToggle/ThemeToggle'
 import { getShowcaseData } from '@/services/showcase'
@@ -7,6 +8,10 @@ export const dynamic = 'force-dynamic'
 
 export default async function Home() {
   const data = await getShowcaseData()
+
+  // Separa: Destaques vs O Resto
+  const featured = data.filter((item) => item.isFeatured)
+  const others = data.filter((item) => !item.isFeatured)
 
   return (
     <main className={styles.main}>
@@ -20,21 +25,34 @@ export default async function Home() {
           <span className={styles.highlight}>PORTFOLIO</span>
         </h1>
         <p className={styles.subtitle}>
-          Todos as aplicações desenvolvidas pela Nexit.
+          Todas as aplicações desenvolvidas pela Nexit.
         </p>
       </section>
 
-      <div className={styles.feed}>
-        {data.length > 0 ? (
-          data.map((item) => (
-            <ShowcaseCard key={item.id} item={item} />
-          ))
-        ) : (
-          <p style={{ color: 'var(--color-text-secondary)', textAlign: 'center' }}>
-            Nenhum projeto público encontrado.
-          </p>
-        )}
-      </div>
+      {/* ÁREA DE DESTAQUE (Carrossel Interativo) */}
+      {featured.length > 0 && (
+        <section style={{ marginBottom: '4rem' }}>
+          <h2 className={styles.sectionTitle}>
+             Projetos em <span>Destaque</span>
+          </h2>
+          {/* O componente cuida de mostrar 1 por 1 com setas */}
+          <FeaturedCarousel items={featured} />
+        </section>
+      )}
+
+      {/* LISTA DE OUTROS PROJETOS (Abaixo, normal) */}
+      {others.length > 0 && (
+        <section>
+          <h2 className={styles.sectionTitle}>
+            Outros Projetos
+          </h2>
+          <div className={styles.feed}>
+            {others.map((item) => (
+              <ShowcaseCard key={item.id} item={item} />
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   )
 }

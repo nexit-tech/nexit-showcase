@@ -5,10 +5,8 @@
   padding-bottom: 3rem;
   border-bottom: 1px solid var(--color-border);
   -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
-  -webkit-tap-highlight-color: transparent;
+  width: 100%;
 }
 
 .header {
@@ -81,29 +79,21 @@
 
 .carouselWrapper {
   position: relative;
-  min-height: 200px;
+  width: 100%;
+  overflow: hidden; 
 }
 
 .carousel {
   display: flex;
   gap: 1.5rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
   padding: 0 1.5rem;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
   cursor: grab;
-  overscroll-behavior-x: none;
-  opacity: 1;
-  filter: blur(0);
-  transform: scale(1);
-  transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+  touch-action: pan-y; 
+  align-items: center; 
 }
 
-.carousel.active {
+.carousel:active {
   cursor: grabbing;
-  scroll-snap-type: none; 
 }
 
 .carousel.hidden {
@@ -112,57 +102,58 @@
   transform: scale(0.98);
 }
 
-.carousel::-webkit-scrollbar {
-  display: none;
-}
+/* --- FORMATO FIXO E PREENCHIMENTO --- */
 
 .slide {
   flex: 0 0 auto;
-  scroll-snap-align: center;
-  overflow: hidden;
   position: relative;
-  background-color: var(--color-surface);
+  background-color: #050505; 
   border: 1px solid var(--color-border);
-  transition: width 0.3s ease, aspect-ratio 0.3s ease;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.carousel:not(.desktopMode) .slide {
-  width: 280px;
-  aspect-ratio: 9/19.5;
   border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* MODO MOBILE: Retângulo em pé */
+.carousel:not(.desktopMode) .slide {
+  width: 300px;
+  aspect-ratio: 9/18; /* Formato celular */
+  max-width: 80vw;
+}
+
+/* MODO DESKTOP: Retângulo deitado */
 .desktopMode .slide {
   width: 85vw;
-  max-width: 800px;
-  aspect-ratio: 16/10;
-  border-radius: 4px;
+  max-width: 900px;
+  aspect-ratio: 16/10; /* Formato monitor */
 }
 
 .image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  pointer-events: auto;
-  cursor: pointer;
-  -webkit-user-drag: none;
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -webkit-touch-callout: none;
+  
+  /* AQUI ESTÁ O SEGREDO DO "PREENCHER SOZINHO" */
+  object-fit: cover; /* Dá zoom até cobrir tudo, sem deixar borda */
+  object-position: center top; /* Foca no topo/centro (bom para sites) */
+  
+  pointer-events: none;
+  display: block;
 }
+
+/* --- FIM --- */
 
 .loader {
   position: absolute;
-  top: -10px;
-  left: 1.5rem;
-  right: 1.5rem;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--color-text-primary), transparent);
   animation: scan 0.6s linear infinite;
   opacity: 0.5;
+  z-index: 10;
 }
 
 @keyframes scan {

@@ -2,57 +2,15 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.95);
   z-index: 9999;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  touch-action: none;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.backdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(5px);
-  animation: fadeIn 0.3s ease-out;
-}
-
-.gestureContainer {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  will-change: transform;
-  touch-action: none;
-  cursor: grab;
-}
-
-.gestureContainer:active {
-  cursor: grabbing;
-}
-
-.image {
-  max-width: 100vw;
-  max-height: 100vh;
-  object-fit: contain;
-  pointer-events: none; /* Garante que o mouse "atravesse" a imagem e pegue o container */
-  user-select: none;
-  -webkit-user-drag: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  will-change: transform;
-  transform-origin: center center;
+  backdrop-filter: blur(10px);
 }
 
 .closeBtn {
@@ -65,32 +23,139 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   cursor: pointer;
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  transition: all 0.2s;
 }
 
-.closeBtn:hover {
-  background: rgba(255, 255, 255, 0.2);
+.navBtn:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.prevBtn { left: 20px; }
+.nextBtn { right: 20px; }
+
+/* Área Principal da Imagem */
+.mainImageContainer {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 80px 120px 80px; /* Espaço para navs e barra inferior */
+  overflow: hidden;
+}
+
+.mainImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  cursor: grab;
+}
+
+.mainImage:active {
+  cursor: grabbing;
+}
+
+/* Barra Inferior */
+.bottomBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: rgba(0, 0, 0, 0.8);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  gap: 8px;
 }
 
 .counter {
-  position: absolute;
-  bottom: 30px;
-  color: rgba(255, 255, 255, 0.7);
-  font-family: var(--font-title);
-  font-size: 0.9rem;
-  background: rgba(0,0,0,0.5);
-  padding: 6px 14px;
-  border-radius: 20px;
-  pointer-events: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.thumbnailsWrapper {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  max-width: 90vw;
+  padding: 5px;
+  scroll-behavior: smooth;
+  /* Esconde scrollbar mas mantém funcional */
+  scrollbar-width: none;
+}
+
+.thumbnailsWrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.thumb {
+  flex: 0 0 50px;
+  height: 50px;
+  border: 2px solid transparent;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+  opacity: 0.5;
+  transition: all 0.2s;
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb:hover {
+  opacity: 1;
+}
+
+.activeThumb {
+  border-color: var(--color-primary);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .navBtn { display: none; } /* Esconde setas no mobile, usa swipe */
+  .mainImageContainer { padding: 20px 10px 120px 10px; }
 }
