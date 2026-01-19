@@ -146,3 +146,19 @@
   background: var(--color-primary);
   border-radius: 2px;
 }
+
+.sectionDescription {
+  text-align: center;
+  max-width: 600px;
+  /* -1.5rem (Topo): Puxa pra cima pra colar no Título
+     auto (Direita): Centraliza
+     1.5rem (Baixo): ANTES ERA 4rem. Diminuí para colar no Card.
+     auto (Esquerda): Centraliza
+  */
+  margin: -1.5rem auto 1.5rem auto; 
+  color: var(--color-text-secondary);
+  font-family: var(--font-text);
+  font-size: 1rem;
+  line-height: 1.6;
+  padding: 0 1.5rem;
+}

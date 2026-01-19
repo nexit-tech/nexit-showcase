@@ -1,3 +1,4 @@
+// components/ui/ShowcaseCard/ShowcaseCard.tsx
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
@@ -29,8 +30,9 @@ export default function ShowcaseCard({ item, customDirection = 0 }: Props) {
   const { openViewer } = useImageViewer()
   const carouselRef = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const dragStartPos = useRef({ x: 0, y: 0 })
 
-  // Define modo inicial
   const initialMode: ViewMode = (item.mobileImages && item.mobileImages.length > 0) ? 'mobile' : 'desktop'
   const [mode, setMode] = useState<ViewMode>(initialMode)
   const [isSwitching, setIsSwitching] = useState(false)
@@ -44,7 +46,6 @@ export default function ShowcaseCard({ item, customDirection = 0 }: Props) {
     if (carouselRef.current) {
       setWidth(carouselRef.current.scrollWidth - carouselRef.current.offsetWidth)
     }
-    // Debug no console do navegador para te ajudar
     if (currentImages.length > 0) {
       console.log(`📸 [${item.title}] Renderizando ${currentImages.length} imagens no modo ${mode}`)
     }
@@ -57,6 +58,27 @@ export default function ShowcaseCard({ item, customDirection = 0 }: Props) {
       setMode(targetMode)
       setTimeout(() => setIsSwitching(false), 50)
     }, 300)
+  }
+
+  const handleDragStart = (event: any, info: any) => {
+    dragStartPos.current = { x: info.point.x, y: info.point.y }
+    setIsDragging(false)
+  }
+
+  const handleDrag = (event: any, info: any) => {
+    const deltaX = Math.abs(info.point.x - dragStartPos.current.x)
+    const deltaY = Math.abs(info.point.y - dragStartPos.current.y)
+    if (deltaX > 5 || deltaY > 5) {
+      setIsDragging(true)
+    }
+  }
+
+  const handleImageClick = (index: number) => {
+    if (!isDragging) {
+      console.log("Abrindo viewer para:", currentImages[index])
+      openViewer(index, currentImages)
+    }
+    setIsDragging(false)
   }
 
   return (
@@ -76,7 +98,6 @@ export default function ShowcaseCard({ item, customDirection = 0 }: Props) {
 
         {hasBothVersions && (
           <div className={styles.toggle}>
-            {/* VOLTARAM OS ÍCONES AQUI */}
             <button 
               className={`${styles.toggleBtn} ${mode === 'mobile' ? styles.active : ''}`}
               onClick={() => handleModeSwitch('mobile')}
@@ -114,7 +135,9 @@ export default function ShowcaseCard({ item, customDirection = 0 }: Props) {
             dragConstraints={{ right: 0, left: -width }}
             dragElastic={0.1}
             whileTap={{ cursor: "grabbing" }}
-            variants={containerVariants} 
+            variants={containerVariants}
+            onDragStart={handleDragStart}
+            onDrag={handleDrag}
           >
             {currentImages.map((imgUrl, index) => (
               <motion.div 
@@ -122,12 +145,8 @@ export default function ShowcaseCard({ item, customDirection = 0 }: Props) {
                 className={styles.slide}
                 variants={itemVariants}
                 custom={customDirection}
-                onClick={() => {
-                    console.log("Abrindo viewer para:", imgUrl)
-                    openViewer(index, currentImages)
-                }}
+                onClick={() => handleImageClick(index)}
               >
-                {/* FORÇANDO DISPLAY BLOCK, TAMANHO TOTAL E ZOOM (Cover) */}
                 <img 
                   src={imgUrl} 
                   alt={`${item.title} ${index}`} 
@@ -137,7 +156,7 @@ export default function ShowcaseCard({ item, customDirection = 0 }: Props) {
                   style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
                   onError={(e) => {
                       console.error(`❌ Falha ao carregar [${index}]:`, imgUrl);
-                      e.currentTarget.style.border = '2px solid red'; // Borda vermelha se falhar
+                      e.currentTarget.style.border = '2px solid red';
                   }}
                 />
               </motion.div>

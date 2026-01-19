@@ -1,0 +1,94 @@
+.footer {
+  width: 100%;
+  padding: 4rem 1.5rem;
+  margin-top: 6rem;
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+/* Bloco da Identidade */
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  text-align: center;
+}
+
+/* --- AQUI ESTÁ A MUDANÇA --- */
+.logo {
+  height: 50px; /* Aumentado para dar destaque */
+  width: auto;
+  object-fit: contain; /* Garante que não distorça */
+  opacity: 1;
+}
+/* --------------------------- */
+
+.tagline {
+  color: var(--color-text-secondary);
+  font-family: var(--font-text);
+  font-size: 0.95rem; /* Aumentei levemente a fonte da frase também */
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+/* Bloco de Links */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-family: var(--font-text);
+  font-size: 0.85rem;
+  transition: color 0.2s;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 600; /* Um pouco mais de peso na fonte */
+}
+
+.link:hover {
+  color: var(--color-text-primary);
+}
+
+.copyright {
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  opacity: 0.5;
+}
+
+/* DESKTOP */
+@media (min-width: 768px) {
+  .footer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 5rem 0; /* Mais espaçamento vertical no desktop */
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .identity {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .nav {
+    flex-direction: row;
+    gap: 2.5rem;
+    align-items: center;
+    height: 100%;
+    /* Ajuste fino para alinhar visualmente o texto dos links com o topo da logo maior */
+    padding-top: 0.8rem; 
+  }
+}

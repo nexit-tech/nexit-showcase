@@ -1,6 +1,7 @@
-import FeaturedCarousel from '@/components/ui/FeaturedCarousel/FeaturedCarousel' // <--- Novo Import
-import ShowcaseCard from '@/components/ui/ShowcaseCard/ShowcaseCard'
+// app/page.tsx
+import FeaturedCarousel from '@/components/ui/FeaturedCarousel/FeaturedCarousel'
 import ThemeToggle from '@/components/ui/ThemeToggle/ThemeToggle'
+import Footer from '@/components/ui/Footer/Footer' // <--- Importe aqui
 import { getShowcaseData } from '@/services/showcase'
 import styles from './page.module.css'
 
@@ -9,9 +10,11 @@ export const dynamic = 'force-dynamic'
 export default async function Home() {
   const data = await getShowcaseData()
 
-  // Separa: Destaques vs O Resto
+  // ... (seus filtros continuam iguais) ...
   const featured = data.filter((item) => item.isFeatured)
-  const others = data.filter((item) => !item.isFeatured)
+  const remainder = data.filter((item) => !item.isFeatured)
+  const nexitProjects = remainder.filter((item) => item.client.trim().toLowerCase().includes('nexit'))
+  const clientProjects = remainder.filter((item) => !item.client.trim().toLowerCase().includes('nexit'))
 
   return (
     <main className={styles.main}>
@@ -29,30 +32,42 @@ export default async function Home() {
         </p>
       </section>
 
-      {/* ÁREA DE DESTAQUE (Carrossel Interativo) */}
+      {/* SEÇÃO DESTAQUES */}
       {featured.length > 0 && (
         <section style={{ marginBottom: '4rem' }}>
           <h2 className={styles.sectionTitle}>
              Projetos em <span>Destaque</span>
           </h2>
-          {/* O componente cuida de mostrar 1 por 1 com setas */}
           <FeaturedCarousel items={featured} />
         </section>
       )}
 
-      {/* LISTA DE OUTROS PROJETOS (Abaixo, normal) */}
-      {others.length > 0 && (
-        <section>
+      {/* SEÇÃO NOSSOS PRODUTOS */}
+      {nexitProjects.length > 0 && (
+        <section style={{ marginBottom: '4rem' }}>
           <h2 className={styles.sectionTitle}>
-            Outros Projetos
+            Nossos <span>Produtos</span>
           </h2>
-          <div className={styles.feed}>
-            {others.map((item) => (
-              <ShowcaseCard key={item.id} item={item} />
-            ))}
-          </div>
+          <p className={styles.sectionDescription}>
+            Aplicações desenvolvidas para uso interno da Nexit, focadas em produtividade, automação e gestão dos nossos próprios processos.
+          </p>
+          <FeaturedCarousel items={nexitProjects} />
         </section>
       )}
+
+      {/* SEÇÃO CLIENTES */}
+      {clientProjects.length > 0 && (
+        <section style={{ marginBottom: '4rem' }}>
+          <h2 className={styles.sectionTitle}>
+            Projetos de <span>Clientes</span>
+          </h2>
+          <FeaturedCarousel items={clientProjects} />
+        </section>
+      )}
+
+      {/* FOOTER NO FINAL */}
+      <Footer />
+      
     </main>
   )
 }
