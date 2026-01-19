@@ -1,47 +1,36 @@
+// hooks/useTheme.ts
 'use client'
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import { useState, useEffect } from 'react'
 
-type Theme = 'dark' | 'light'
-
-interface ThemeContextType {
-  theme: Theme
-  toggleTheme: () => void
-}
-
-const ThemeContext = createContext<ThemeContextType>({} as ThemeContextType)
-
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark')
+export function useTheme() {
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark')
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('nexit-theme') as Theme
+    // 1. Verifica se já tem algo salvo
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+    
+    // 2. Se tiver, usa. Se não, assume dark.
     if (savedTheme) {
       setTheme(savedTheme)
       document.documentElement.setAttribute('data-theme', savedTheme)
     } else {
-      const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches
-      if (systemPrefersLight) {
-        setTheme('light')
-        document.documentElement.setAttribute('data-theme', 'light')
-      }
+      document.documentElement.setAttribute('data-theme', 'dark')
     }
   }, [])
 
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark'
+    
+    // Atualiza estado
     setTheme(newTheme)
+    
+    // Atualiza HTML (para o CSS pegar)
     document.documentElement.setAttribute('data-theme', newTheme)
-    localStorage.setItem('nexit-theme', newTheme)
+    
+    // Salva na memória do navegador
+    localStorage.setItem('theme', newTheme)
   }
 
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  )
-}
-
-export function useTheme() {
-  return useContext(ThemeContext)
+  return { theme, toggleTheme }
 }

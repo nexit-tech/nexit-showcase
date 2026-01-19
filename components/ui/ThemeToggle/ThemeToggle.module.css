@@ -1,49 +1,56 @@
+/* components/ui/ThemeToggle/ThemeToggle.module.css */
 .toggleBtn {
   background: none;
   border: none;
   color: var(--color-text-primary);
   padding: 8px;
   cursor: pointer;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.3s ease;
   outline: none;
-  position: relative;
-  width: 40px;
-  height: 40px;
+  /* Garante que o ícone fique contido */
+  position: relative; 
 }
 
 .toggleBtn:hover {
   color: var(--color-text-secondary);
 }
 
-.icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.5s ease;
-  opacity: 1;
+.iconWrapper {
+  position: relative;
+  width: 24px;
+  height: 24px;
 }
 
-.hidden {
-  opacity: 0;
-  pointer-events: none;
+.icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* Mude de 0.5s para 0.8s aqui também */
+  transition: all 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* LUA */
+.moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
 }
 
 .moon.hidden {
-  transform: translate(-50%, -50%) rotate(90deg);
+  opacity: 0;
+  transform: rotate(90deg) scale(0);
 }
 
-.moon:not(.hidden) {
-  transform: translate(-50%, -50%) rotate(0deg);
+/* SOL */
+.sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
 }
 
 .sun.hidden {
-  transform: translate(-50%, -50%) rotate(-90deg);
-}
-
-.sun:not(.hidden) {
-  transform: translate(-50%, -50%) rotate(0deg);
+  opacity: 0;
+  transform: rotate(-90deg) scale(0);
 }

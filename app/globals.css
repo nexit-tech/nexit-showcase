@@ -35,21 +35,33 @@
   margin: 0;
 }
 
+/* AQUI ESTÁ A CORREÇÃO DA TRANSIÇÃO */
 html,
 body {
   max-width: 100vw;
   min-height: 100vh;
   overflow-x: hidden;
   font-family: var(--font-text);
+  
+  /* As cores que vão mudar */
   background-color: var(--color-bg);
   color: var(--color-text-primary);
+  
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.3s ease, color 0.3s ease;
+
+  /* O SEGREDO: Aplicar a transição aqui e garantir que pegue tudo */
+  transition: background-color 1s ease-in-out, color 1s ease-in-out;
+}
+
+/* Garante que elementos de bloco também transicionem suavemente se tiverem cor de fundo */
+section, div, footer, header, nav, main, article {
+  transition: background-color 1s ease-in-out, border-color 1s ease-in-out;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-title);
   font-weight: 600;
+  transition: color 1s ease-in-out; /* Suaviza o texto também */
 }
 
 img {
