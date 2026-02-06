@@ -1,16 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone', // <--- Adicionado para reduzir RAM
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**', // Permite QUALQUER domínio (Supabase, S3, etc)
+        hostname: '**', // Permite QUALQUER domínio
       },
     ],
-    // Desabilita otimização estrita se estiver dando erro de timeout
     unoptimized: true, 
   },
-  // Garante que o CSS modules funcione bem
   reactStrictMode: true,
 };
 
